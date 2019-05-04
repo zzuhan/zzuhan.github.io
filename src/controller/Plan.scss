@@ -1,0 +1,32 @@
+@function rem($px) {
+    // @return ($px/750)* 1rem;
+    @return $px / 2 * 1px; 
+}
+
+.dayList {
+    display: flex;
+    flex-direction: column;
+}
+
+.daySection {
+    // flex: 1;
+    // width: rem(200);
+    // text-align: center;
+    margin-top: rem(20);
+}
+
+.sectionTitle {
+    margin-bottom: rem(20);
+    display: inline-block;
+    text-align: center;
+}
+
+.sectionList {
+    display: flex;
+    flex-direction: row;
+    // justify-content: center;
+    // align-items: center;
+}
+
+
+

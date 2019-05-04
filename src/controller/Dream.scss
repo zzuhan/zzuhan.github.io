@@ -1,0 +1,39 @@
+@function rem($px) {
+    // @return ($px/750)* 1rem;
+    @return $px / 2 * 1px; 
+}
+
+.dayList {
+    display: flex;
+    flex-direction: column;
+}
+
+.dreamSection {
+    // flex: 1;
+    // width: rem(200);
+    // text-align: center;
+    // margin-top: rem(20);
+    margin-bottom: rem(20);
+}
+
+.statusError {
+    border: rem(2) solid red;
+}
+
+.sectionTitle {
+    margin-bottom: rem(20);
+    display: inline-block;
+    text-align: center;
+    font-size: rem(14);
+    font-weight: bold;
+}
+
+.sectionList {
+    display: flex;
+    flex-direction: row;
+    // justify-content: center;
+    // align-items: center;
+}
+
+
+

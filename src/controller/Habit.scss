@@ -1,0 +1,23 @@
+@function rem($px) {
+    // @return ($px/750)* 1rem;
+    @return $px / 2 * 1px; 
+}
+
+.qaList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.answerList {
+    padding: 0;
+    margin-bottom: rem(24);
+    background: #FFF;
+    padding: rem(24) rem(24);
+    border-radius: rem(24);
+    list-style-position: inside;
+    li {
+        // list-style: none;
+    }
+}
+
