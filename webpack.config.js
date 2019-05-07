@@ -43,8 +43,29 @@ const rules = [
     },
     {
         test: /\.(js|jsx|ts|tsx)?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader'
+        // exclude: /(node_modules|bower_components)/,
+        include: [
+          path.resolve(__dirname, 'src'),
+          // link命令有很大的问题哇，使用
+          path.resolve(__dirname, 'node_modules/qa'),
+          path.resolve(__dirname, '../zsui/qa')        
+        ],
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            'presets': [
+              '@babel/env',
+              '@babel/react',
+              '@babel/typescript'
+            ],
+            'plugins': [
+              '@babel/plugin-transform-object-assign',
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-syntax-dynamic-import'
+            ]
+          }
+        }]
+       
     },
     {
         type: 'javascript/auto',
@@ -57,6 +78,7 @@ const rules = [
             MiniCssExtractPlugin.loader,
             // __PROD__ ? MiniCssExtractPlugin.loader : 'style-loader',
             {
+                // 
                 loader: 'css-loader',
                 options: {
                     importLoaders: 2,
@@ -107,7 +129,41 @@ const optimization = {
     optimization: {
       splitChunks: {
         chunks: 'all',
-        minChunks: 2
+        minChunks: 2,
+        cacheGroups: {
+          "vendor": {
+            name: "vendor",
+            test: /[\\/]node_modules[\\/]/,
+            priority: 1,
+            minChunks: 1,
+            reuseExistingChunk: true
+          },
+          "utils": {
+            name: "utils",
+            test: /[\\/]node_modules[\\/](moment)[\\/]/,
+            priority: 2,
+            minChunks: 1,
+            reuseExistingChunk: true
+          },
+          "use-twice": {
+            name: 'use-twice',
+            // test: /[\\/]node_modules[\\/]/,
+            // TODO 这是什么含义？
+            chunks: 'all',
+            priority: 2,
+            minChunks: 2,
+            reuseExistingChunk: true
+          },
+          // "zsui": {
+          //   name: 'zsui',
+          //   test: (module) => {
+          //     return /qa/.test(module.context);
+          //   },
+          //   chunks: 'initial',
+          //   minChunks: 1,
+          //   priority: 10,
+          // }
+        }
       },
       minimizer: [
         new UglifyJsPlugin({
@@ -143,7 +199,8 @@ const stagePlugins = {
       filename: 'index.html',
       inject: 'body',
       minify: false,
-      chunksSortMode: 'auto'
+      chunksSortMode: 'auto',
+      chunks: ['app', 'use-twice', 'vendor', 'utils']
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -244,8 +301,6 @@ const stageConfig = {
   }
 };
 
-console.log(__NODE_ENV__, process.env.NODE_ENV, stageConfig);
-
 const createConfig = () => {
     debug('Creating configuration.');
     debug(`Enabling devtools for '${__NODE_ENV__} Mode!'`);
@@ -268,15 +323,18 @@ const createConfig = () => {
         }
       }
     };
-  
+
     // ------------------------------------
     // Entry Points
     // ------------------------------------
     webpackConfig.entry = {
       app: ['babel-polyfill', path.resolve(__dirname, 'src/index.js')].concat(
         'webpack-hot-middleware/client?path=/__webpack_hmr'
+      ),
+      app2: ['babel-polyfill', path.resolve(__dirname, 'src/index2.js')].concat(
+        'webpack-hot-middleware/client?path=/__webpack_hmr'
       )
-    };
+    }
   
     // ------------------------------------
     // Bundle externals
@@ -290,8 +348,8 @@ const createConfig = () => {
     // Bundle Output
     // ------------------------------------
     webpackConfig.output = {
-      filename: '[name].[hash].js',
-      chunkFilename: '[name].[hash].js',
+      filename: __DEV__ ? '[name].[hash].js': '[name].[chunkhash].js',
+      chunkFilename: '[name].[chunkhash].chunk.js',
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/'
     };

@@ -15,12 +15,29 @@
     background: #FFF;
 }
 
-.status-error .title {
-    background: red;
-    color: #FFF;
-}
 
-.status-success .title {
-    background: green;
+.status-warning .title {
     color: #FFF;
+
+    background-color: rgb(223, 117, 20);;
+}
+.status-error .title{
+    color: #FFF;
+
+    background-color: rgb(202, 60, 60); 
+}
+.status-success .title{
+    color: #FFF;
+
+    background-color: rgb(28, 184, 65);
+}
+.status-secondary .title{
+    color: #FFF;
+
+    background-color: rgb(66, 184, 221);
+}
+.status-primary .title{
+    color: #FFF;
+
+    background-color: rgb(0, 120, 231);
 }

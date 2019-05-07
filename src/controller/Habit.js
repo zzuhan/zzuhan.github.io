@@ -1,15 +1,24 @@
 import React from 'react';
 import styles from './Habit.scss';
-import QA from '@/components/QA';
+import QA from 'qa';
 import { Router } from 'react-router';
 
 const questions = [
   {
     title: '晨起冥想',
     answer: [
-      '想象未来的自己，伟大的目标，成为原则等作者大牛，技术上P7，P8',
-      '痛苦的意义，人生苦难重重，苦难让你成本，勇敢直面痛苦',
-      '自身积极的品质，专业，可靠'
+      '想象未来的自己，伟大的目标，成为前端工程化专家，前端Leader。(成为原则等作者大牛，技术上P7，P8)',
+      '意义，就是全力以赴，享受成长，解决问题的快乐',
+      '痛苦的意义，人生总是苦难重重，看你如何应对的',
+      '渴望积极的品质，专业，可靠，专家'
+    ]
+  },
+  {
+    title: '晨起笔记',
+    answer: [
+      '回顾阶段目标，月度目标，完成和未完成的',
+      '为了冲刺，今天要突破什么，什么最重要的事',
+      '今天的计划是什么？如何达成机会'
     ]
   },
   {

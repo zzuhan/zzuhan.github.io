@@ -2,6 +2,11 @@
 
 * 如何把所有的css最后都做到一个bundle里面？一个loader和一个plugin
 
+# 组件问题
+
+* link问题
+    * include配置，需要加上文件的相对路径
+
 # 优化
 
 * 路径优化 $
@@ -31,11 +36,10 @@ webpack
     * html-loader?
     * js -> babel-loader
     * css -> 
-        sass-loader 变成普通的sass loader
-        css-loader 对css可做变形转义，只是手动加各种参数，root路径，module模块化 在js中使用，localIdentName定制化class名，minimize压缩，camelCase
-            借鉴，https://juejin.im/entry/5826e755c4c9710054313d6e
-        style-loader css最终插入到html中为`<style>${cssContent}</style>`这样标签
-        MiniCssExtractPlugin.loader ? extract是什么意思？抽取，即把所有的css抽取到一起吧. 可以做longTermCache，根据entry不同输出不同file，
+        * sass-loader 变成普通的sass loader
+        * css-loader 对css可做变形转义，只是手动加各种参数，root路径，module模块化 在js中使用，localIdentName定制化class名，minimize压缩，camelCase，借鉴，https://juejin.im/entry/5826e755c4c9710054313d6e
+        * style-loader css最终插入到html中为`<style>${cssContent}</style>`这样标签
+        * MiniCssExtractPlugin.loader ? extract是什么意思？抽取，即把所有的css抽取到一起吧. 可以做longTermCache，根据entry不同输出不同file，
     * png -> url-loader
 * plugin 
     * HtmlWebpackPlugin

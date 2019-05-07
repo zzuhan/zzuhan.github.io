@@ -1,3 +1,5 @@
+@import "@/base/_common.scss";
+
 .qaList {
     display: flex;
     flex-wrap: wrap;
@@ -12,5 +14,14 @@
     list-style-position: inside;
     li {
         // list-style: none;
+        margin-bottom: rem(10);
     }
+}
+
+.sectionTitle {
+    margin-bottom: rem(20);
+    display: inline-block;
+    text-align: center;
+    font-size: rem(28);
+    font-weight: bold;
 }

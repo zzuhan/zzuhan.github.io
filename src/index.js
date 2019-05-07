@@ -5,6 +5,7 @@ import RedBox from 'redbox-react';
 import DefaultContainer from '@/containers/Default';
 const ENTRY_POINT = document.querySelector('#react-app-root');
 
+import vara from './config';
 
 const render = () => {
   ReactDOM.render(<DefaultContainer />, ENTRY_POINT);
