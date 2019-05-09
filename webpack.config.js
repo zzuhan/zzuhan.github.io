@@ -48,7 +48,8 @@ const rules = [
           path.resolve(__dirname, 'src'),
           // link命令有很大的问题哇，使用
           path.resolve(__dirname, 'node_modules/qa'),
-          path.resolve(__dirname, '../zsui/qa')        
+          path.resolve(__dirname, '../zsui/qa'),        
+          path.resolve(__dirname, 'node_modules/react-icons'),        
         ],
         use: [{
           loader: 'babel-loader',
@@ -218,8 +219,8 @@ const stagePlugins = {
   ],
   production: [
     new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
-      chunkFilename: '[name].[hash].css'
+      filename: '[name].[chunkhash].css',
+      chunkFilename: '[name].[chunkhash].css'
     }),
     new HtmlWebpackPlugin({
       template: path.resolve('./src/index.html'),
@@ -353,7 +354,7 @@ const createConfig = () => {
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/'
     };
-  
+
     // ------------------------------------
     // Plugins
     // ------------------------------------

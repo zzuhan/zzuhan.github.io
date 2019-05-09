@@ -1,0 +1,24 @@
+@function rem($px) {
+    // @return ($px/750)* 1rem;
+    @return $px / 2 * 1px; 
+}
+
+.container {
+    position: relative;
+}
+
+.list {
+    height: rem(80);
+    overflow: hidden;
+}
+
+.open {
+    height: auto;
+}   
+
+.trigger-container {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: rem(-20);
+}

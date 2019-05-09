@@ -4,45 +4,28 @@ import QA from 'qa';
 import { Router } from 'react-router';
 import moment from 'moment';
 
-moment();
-
 const BaseQuestions = [
   {
-    title: '心理状态要求',
+    title: '如何达到最佳状态',
     status: 'error',
     answer: [
-      '每天有目标感，清晰可行的职业规划，前端架构师，到架构组，成为技术Leader，充满动力，不屈不挠，想尽办法。',
-      '积极思考，伟大梦想。诞生伟大能力。(我可以成为前端工程化专家，前端Leader)',
-      '乐观思考，35岁的职业危机，你还有很多可能性，成为P7，P8就不用担心',
-      '不屈不挠，我为什么不可以成为他们那样',
-      '拥有信念，信心，相信一定可以成为前端工程专家，并付诸实践。(把过去的低谷踩在脚下)',
-      '为了目标全力以赴，尽自己最大的努力，像创业者那样。能抓紧一切碎片化时间。',
-      '勇敢，接纳自己的缺点和不足，直面惨淡现实(面试前能力不足现实)，有被讨厌的勇气。'
-    ]
-  },
-  {
-    title: '对自己的要求',
-    status: 'error',
-    answer: [
-      '要让自己感到痛苦和焦虑。即提出伟大目标和挑战，绞尽脑汁思考如何达成。(独挡一面，团队Leader，架构师)。(太快乐就是安逸)',
-      '把Refresh变成必须做的，职业规划，专业，可靠，聪明，战略勤奋。',
-      '专业。我的内容明天要讲给老板讲给别人听',
-      '转变思路，要做10人中的top，而非就这样，',
-      '@严格的要求',
-      '聪明(多思考)',
-      '专家，做专业和专家的标准',
-      '领导力',
-      '家庭的担当和责任，都是华茵在出力。',
-      '解决问题能力'
+      '运动，冥想，休息，达到身体上的最佳状态。',
+      '压力可控，每天没有特别紧张的感觉',
+      '心理上的塑造。目标感，勇气，逆商。',
+      '有梦想，有信念。',
+      '工作心流。G点，需要扫除短板，获得工作成就感。第二天起来就想拿起来继续做',
+      '全身心自主性，兴趣热爱，全身心的投入。(当下的面试完全为了自己，做个人的助手。工作中通过投入更多)',
+      '有明确目标(要如何面试成功)，自主性(完全是为自己)，有计划(前端工程化的内容)，造就的执行力，难度hold住，有挑战，有正反馈。',
+      '严格要求自己。积极的品质'
     ]
   },
   {
     title: '自我激励的方法',
     answer: [
+      '积极思考的习惯，成长思维。',
       '重塑大脑，假想成我是阎王或上坡，我会如何行动',
-      '看别人激励自己，94年化学专业的，在Teambition架构组，现在在Leetcode，https://zhuanlan.zhihu.com/p/24607229',
-      '阿大，云构建的设计 http://taobaofed.org/blog/2016/01/29/fe-engineering-width-cloud-build/',
-      '积极思考的习惯'
+      '触发点。94年化学专业的，在Teambition架构组，现在在Leetcode，https://zhuanlan.zhihu.com/p/24607229。阿大，云构建的设计 http://taobaofed.org/blog/2016/01/29/fe-engineering-width-cloud-build/',
+      '自尊心。6年的还是p6，面试的失败，工作的失败',
     ]
   },
   {
@@ -105,36 +88,102 @@ const BaseQuestions = [
     '严格要求自己，高要求，高改变。(自律，延迟满足）',
     '谨慎承诺，承诺要按计划交付'
   ]
+},
+{
+  title: '遇到无动力怎么办',
+  answer: [
+    '长远且坚定的目标(2年成为前端技术经理)',
+    '寻找快乐，积极幸福心理学，做有意义的事情，接纳自己看到成长',
+    '积极的思考，十倍思维非常重要(我可以是技术经理，如何拿到一堆Offer，3.75成绩)',
+    '对自己苛刻的要求()',
+    '或许该放松下一下了',
+    '回顾过去克服困难，都是小坎，跨一下，差距是方法和努力，充满自信',
+    '@自我激励的方法',
+    '找到当下困难解法，走出泥潭，取得胜利',
+    '为什么对自己残酷，因为世界太残酷了'
+  ]
+},
+{
+  title: '不愿改变怎么办',
+  answer: [
+   
+  ]
 }
 ];
 
 const threeGansQuestions = [
   {
-    title: '心力',
+    title: '心力锻炼',
     answer: [
-      '冥想',
-      '睡眠',
-      '运动'
+      '冥想。对困难对未来的思考。',
+      '睡眠。休息可以恢复自制力。',
+      '运动。可以消除焦虑的皮上脂肪，感觉非常轻松愉悦。'
     ]
   },
   {
-    title: '脑力(更好思考学习)',
+    title: '独立思考(自我审视)',
     answer: [
-      '安静独立的环境，在一堆人时无法更好的思考。',
-      '开放的环境，减少在封闭的环境等情况'
+      'why? 每次在独立思考时间，能重新抬头审视自己，思考当下问题。(离职后，思考应当做teamloader，思考6年我做了什么)',
+      '许保证大脑被自我审视占据，而非玩耍的快乐，或对问题的思考时间',
+      '暂停时间。长的如5.1这段不工作时间，短的通过断网方式。(否则就没时间去思考)',
+      '独处。(如一个人住酒店时思考)',
+      '发散环境。(独自一人走路，洗澡，开车时)',
+      '运行。',
+      '冥想时刻。',
+      '放空压力和问题。一直紧绷时视角变窄。'
     ]
   },
   {
-    title: '体力',
+    title: '专注力(脑力)',
     answer: [
-      ''
+      'why? 非常重要，需要重视时间的质量',
+      '1 精力曲线。找到G点，解决难题。低点就普通题或休息。',
+      '2 心流。找到心流',
+      '3 @体力(休息)',
+      '4 专注模式和发散模式切换',
+      '独自安静的环境。(一堆人在家时无法很好思考)',
+      '开放的工作空间。(狭小的工作空间，无法思考)',
+      '状态。太高压会导致视野变摘。',
+    ]
+  },
+  {
+    title: '体力(休息)',
+    answer: [
+      '运动。清空大脑的垃圾',
+      '小休息(每天)。冥想，活动，运动。注：玩手机不是休息。',
+      '大休息(一周)。做想做的运动或兴趣，到大自然中。逛街看电影等并不是好的休息。',
+      '最高效的人都是最会休息的人。-> https://36kr.com/p/5176044'
+    ]
+  },
+  {
+    title: '失败的思考(论成长)',
+    status: 'error',
+    answer: [
+      '一件事总是U型曲线，从初始高昂，挫折的低谷，再走出低谷。(项目是，面试过程也是)',
+      '成长就是提出一个目标，失败，吸取教训(决定不同人的差异)，再提出更高目标，螺旋上升的',
     ]
   },
   {
     title: '精力',
     answer: [
-      '积极乐观的情绪',
-      '大休息和小休息'
+      '最高精力来自于注入的意义。拥有伟大的梦想。',
+      '积极自信的情绪',
+    ]
+  },
+  {
+    title: '焦虑自卑',
+    answer: [
+      '@自己解压方式',
+      '精进，超越自己为目标。而不是跟别人对比',
+      '接纳自己，看到自己的进步'
+    ]
+  },
+  {
+    title: '自己解压方式',
+    answer: [
+      '压力不可避免，找到自己解压的方式',
+      '运动。(5.7通过hiit运动，又恢复了活力)',
+      '旅行。到大自然中。回老家一趟放松'
     ]
   }
 ];
@@ -151,7 +200,41 @@ const growQuestions = [
     ]
   },
   {
-    title: '梦想6步',
+    title: '就是精进',
+    status: 'error',
+    answer: [
+      '当下的这个个人助手，通过不断精进达到专家，而非只写一版'
+    ]
+  },
+  {
+    title: '就是解决问题',
+    status: 'error',
+    answer: [
+      '最重要的不是掌握多少技术，多少技术难点，而是发现，分析和解决问题能力，最终创造价值。着一定很难。',
+      '案例，当下的面试，你有尝试分析问题，解决问题，求助等方法了吗？而是埋头去补充技术'
+    ]
+  },
+  {
+    title: '重要的是方法(导师)',
+    status: 'error',
+    answer: [
+      '寻找一个人生导师的重要意义，少犯错误',
+      '更专业的方法。(打篮球时好的教练，健身时正确的姿势。别人的晋升要求)',
+      '都是针对问题，提出更好的方法。(设计解决自身自制力问题)'
+    ]
+  },
+  {
+    title: '成长利器-复盘',
+    status: 'error',
+    answer: [
+      '复盘是快速成长方法',
+      '发现自身最大的问题，刻不容缓，获得巨大提升',
+      '复盘方法，目标是什么？结果差距是什么？再来一次如何避免？'
+    ]
+  },
+  {
+    title: '梦想5步',
+    status: 'error',
     answer: [
       '1 伟大目标',
       '2 限制性短板',
@@ -170,13 +253,7 @@ const growQuestions = [
       '远见。(对前端未来思考，技术未来，产业未来)'
     ]
   },
-  {
-    title: '好的方法',
-    answer: [
-      '更专业的方法。(打篮球时好的教练，健身时正确的姿势。别人的晋升要求)',
-      '都是针对问题，提出更好的方法。(设计解决自身自制力问题)'
-    ]
-  },
+ 
   {
     title: 'Stay Foolish(质疑)',
     answer: [
@@ -198,9 +275,10 @@ const growQuestions = [
     ]
   },
   {
-    title: '难点和问题',
+    title: '突破当下难点',
+    status: 'error',
     answer: [
-      '努力是没用的，最重要解决当下的问题，或称之为那道墙',
+      '努力是没用的，最重要解决当下的问题，或称之为那道墙。(如程序设计这道坎，现在最重要的，把它睬平了，变成你的优势项)',
       '对自身问题的刻不容缓'
     ]
   },
@@ -244,8 +322,10 @@ const methodQuestions = [
   },
   {
     title: '最重要的事',
+    status: 'error',
     answer: [
-      '当下的难点和挑战',
+      '当下的难点和挑战，哪些觉得做不到的',
+      '否定自己，刷新自己的认知。(5.7发现解决问题才最重要，过多的无效努力)',
       '如何在1年后P7，绞尽脑汁',
       '上面的成长方法'
     ]
@@ -312,6 +392,8 @@ const solveQuestions = [
   }
 ]
 
+let questions = [].concat(BaseQuestions).concat(solveQuestions).concat(threeGansQuestions).concat(growQuestions).concat(methodQuestions);
+
 export default class AppContainer extends React.Component {
   state = {
     answers: []
@@ -326,10 +408,16 @@ export default class AppContainer extends React.Component {
   }
 
   showAnswerByTitle = title => {
-    let qa = questions.find(question => question.title === title);
+    let qa = questions.find(question => question.title.indexOf(title) !== -1)
     if(qa) {
       this.setState({
         answers: [...this.state.answers, qa.answer]
+      }, function callback(){
+        console.log(this.state.answers)
+      });
+    } else {
+      this.setState({
+        answers: [...this.state.answers, [`未找到"${title}"对应的答案`]]
       }, function callback(){
         console.log(this.state.answers)
       });
@@ -371,7 +459,7 @@ export default class AppContainer extends React.Component {
                 return <QA onClick={this.showAnswer} qa={qa} />;
               })}
             </div>
-            <span className={styles.sectionTitle}>解决问题22333</span>
+            <span className={styles.sectionTitle}>解决问题</span>
             <div className={styles.qaList}>
               {solveQuestions.map(qa => {
                 return <QA onClick={this.showAnswer} qa={qa} />;

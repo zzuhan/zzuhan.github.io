@@ -19,15 +19,16 @@ export default class DefaultContainer extends React.Component {
           </section>
           <section className={styles.body}>
             <Route path="/" exact component={QAController}></Route>
-            <Route path="/plan" component={PlanController}></Route>
+            {/* <Route path="/plan" component={PlanController}></Route> */}
             <Route path="/planing" component={PlaningController}></Route>
             <Route path="/dream" component={DreamController}></Route>
             <Route path="/habit" component={HabitController}></Route>
+            <div className={styles.bottomReplace}></div>
           </section>
           <section className={styles.bottom}>
             <div className={styles.bottomItem}><Link to="/">问答</Link></div>
             <div className={styles.bottomItem}><Link to="/planing">计划</Link></div>
-            <div className={styles.bottomItem}><Link to="/plan">周计划</Link></div>
+            {/* <div className={styles.bottomItem}><Link to="/plan">周计划</Link></div> */}
             <div className={styles.bottomItem}><Link to="/dream">实现梦想</Link></div>
             <div className={styles.bottomItem}><Link to="/habit">习惯</Link></div>
           </section>

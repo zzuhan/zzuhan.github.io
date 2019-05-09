@@ -2,10 +2,12 @@
 
 * 如何把所有的css最后都做到一个bundle里面？一个loader和一个plugin
 
-# 组件问题
+# 构建问题
 
-* link问题
+* npm link问题
     * include配置，需要加上文件的相对路径
+* css如何优化，为何和js的hash一致
+* stats.json有错误，但是调用webpack()编译时callback未有错误信息，react-icons的版本未编译过，是
 
 # 优化
 

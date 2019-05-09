@@ -5,6 +5,8 @@ const debug = require('debug')('app:build:webpack-compiler');
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config.js');
 
+const fs = require('fs');
+
 // -----------------------------
 // READING WEBPACK CONFIGURATION
 // -----------------------------
@@ -18,6 +20,8 @@ function webpackCompiler() {
 
                 return reject(err);
             }
+
+            console.log(err);
 
             const jsonStats = stats.toJson();
 
@@ -36,8 +40,9 @@ const compile = () => {
 
     return Promise.resolve()
         .then(() => webpackCompiler())
-        .then(() => {
+        .then((stats) => {
             debug('Compilation completed successfully.');
+            fs.writeFileSync('./stats.json', JSON.stringify(stats));
         })
         .catch(err => {
             debug('Compiler encountered an error.', err);
