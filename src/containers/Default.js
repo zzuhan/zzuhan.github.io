@@ -6,11 +6,13 @@ import PlaningController from '@/controller/Planing';
 import HabitController from '@/controller/Habit';
 import DreamController from '@/controller/Dream';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import SomeOne from './SomeOne';
 
 export default class DefaultContainer extends React.Component {
   render() {
     return (
     <Router>
+      
       <div className={styles.container}>
         <div className={styles.inner}>
           <section className={styles.header}>
@@ -18,6 +20,7 @@ export default class DefaultContainer extends React.Component {
             <div className={styles.rightBar}>头像</div>
           </section>
           <section className={styles.body}>
+            <SomeOne />
             <Route path="/" exact component={QAController}></Route>
             {/* <Route path="/plan" component={PlanController}></Route> */}
             <Route path="/planing" component={PlaningController}></Route>

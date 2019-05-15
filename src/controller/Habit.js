@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './Habit.scss';
-import QA from 'qa';
+import QA from '@/components/QA';
 import { Router } from 'react-router';
 
 const questions = [
   {
     title: '晨起冥想',
     answer: [
-      '想象未来的自己，伟大的目标，成为前端工程化专家，前端Leader。(成为原则等作者大牛，技术上P7，P8)',
+      '想象未来的自己，伟大的目标，成为前端工程化专家，前端Leader。(成为原则等作者大牛，技术上P7，P8)。必胜的信念。',
       '意义，就是全力以赴，享受成长，解决问题的快乐',
       '痛苦的意义，人生总是苦难重重，看你如何应对的',
       '渴望积极的品质，专业，可靠，专家'
@@ -49,9 +49,17 @@ const questions = [
     ]
   },
   {
-    title: '跑步',
+    title: '坚持复盘',
     answer: [
-      '一周跑10次能坚持下来吗'
+      '机器人的要求，哪些没做到的',
+      ''
+    ]
+  },
+  {
+    title: '对自己提出问题',
+    answer: [
+      '今天为了目标做什么冲刺',
+      ''
     ]
   }
 ];

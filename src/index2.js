@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import QA from 'qa';
+import QA from '@/components/QA';
 
 
 const ENTRY_POINT = document.querySelector('#react-app-root');

@@ -48,21 +48,29 @@ const rules = [
           path.resolve(__dirname, 'src'),
           // link命令有很大的问题哇，使用
           path.resolve(__dirname, 'node_modules/qa'),
-          path.resolve(__dirname, '../zsui/qa'),        
-          path.resolve(__dirname, 'node_modules/react-icons'),        
+          path.resolve(__dirname, '../zsui/qa'),
+          path.resolve(__dirname, 'node_modules/react-icons')
         ],
         use: [{
           loader: 'babel-loader',
           options: {
+            'cacheDirectory': true,
             'presets': [
-              '@babel/env',
+              ['@babel/env', {
+                "targets": {
+                  "browsers": ["last 2 versions", "safari >= 7", "ie >= 9", "chrome >= 52"] // 配置兼容浏览器版本
+                },
+                "modules": false,
+                "useBuiltIns": "usage"
+              }],
               '@babel/react',
               '@babel/typescript'
             ],
             'plugins': [
               '@babel/plugin-transform-object-assign',
               '@babel/plugin-proposal-class-properties',
-              '@babel/plugin-syntax-dynamic-import'
+              '@babel/plugin-syntax-dynamic-import',
+              '@babel/plugin-transform-runtime'
             ]
           }
         }]
@@ -191,6 +199,8 @@ const optimization = {
 const stagePlugins = {
   test: [new BundleAnalyzerPlugin()],
   development: [
+   
+    new BundleAnalyzerPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].[hash].css',
       chunkFilename: '[name].[hash].css'
@@ -317,7 +327,7 @@ const createConfig = () => {
       },
       ...optimization,
       resolve: {
-        modules: ['node_modules'],
+        modules: [path.resolve(__dirname, 'src'), 'node_modules'],
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
         alias: {
           '@': resolve('src')
@@ -329,10 +339,10 @@ const createConfig = () => {
     // Entry Points
     // ------------------------------------
     webpackConfig.entry = {
-      app: ['babel-polyfill', path.resolve(__dirname, 'src/index.js')].concat(
+      app: [path.resolve(__dirname, 'src/index.js')].concat(
         'webpack-hot-middleware/client?path=/__webpack_hmr'
       ),
-      app2: ['babel-polyfill', path.resolve(__dirname, 'src/index2.js')].concat(
+      app2: [path.resolve(__dirname, 'src/index2.js')].concat(
         'webpack-hot-middleware/client?path=/__webpack_hmr'
       )
     }
@@ -340,10 +350,11 @@ const createConfig = () => {
     // ------------------------------------
     // Bundle externals
     // ------------------------------------
-    // webpackConfig.externals = {
-    //   react: 'React',
-    //   'react-dom': 'ReactDOM'
-    // };
+    webpackConfig.externals = {
+      '@weex/dom': 'commonjs @weex/dom'
+      // react: 'React',
+      // 'react-dom': 'ReactDOM'
+    };
   
     // ------------------------------------
     // Bundle Output
@@ -365,7 +376,11 @@ const createConfig = () => {
         __PROD__,
         __TEST__
       }),
-      ...stagePlugins[__NODE_ENV__]
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
+      }),
+      ...stagePlugins[__NODE_ENV__],
     ];
   
     // ------------------------------------

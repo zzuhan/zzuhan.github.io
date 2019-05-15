@@ -21,8 +21,6 @@ function webpackCompiler() {
                 return reject(err);
             }
 
-            console.log(err);
-
             const jsonStats = stats.toJson();
 
             debug('Webpack compilation is completed.');
