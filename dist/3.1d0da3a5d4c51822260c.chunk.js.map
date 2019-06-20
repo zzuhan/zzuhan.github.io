@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/components/lazyload.js"],"names":["console","log","__webpack_exports__"],"mappings":"0FAAAA,eAAQC,IAAI,SAEGC,EAAA","file":"3.1d0da3a5d4c51822260c.chunk.js","sourcesContent":["console.log('我被加载了');\n\nexport default 'this is string';"],"sourceRoot":""}

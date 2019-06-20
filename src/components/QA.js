@@ -12,6 +12,8 @@ export default class AppContainer extends React.Component {
   render() {
     const {qa} = this.props;
 
+    if(!qa) return null;
+
     return (
       <div className={styles.item} onClick={this.onClick}>
         <span className={[styles.title, styles[`status-${qa.status}`]].join(' ')} onClick={this.toggle}>{qa.title}</span>

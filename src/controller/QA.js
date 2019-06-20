@@ -118,6 +118,22 @@ const BaseQuestions = [
 
 const threeGansQuestions = [
   {
+    title: '自己没有动力了',
+    status: 'error',
+    answer: [
+      "https://www.yuque.com/chengkuan/great_person/energy#9Fe7L",
+    ],
+    type: 'link'
+  },
+  {
+    title: '逃避困难时',
+    status: 'error',
+    answer: [
+      "https://www.yuque.com/chengkuan/great_person/escape#TPz9a",
+    ],
+    type: 'link'
+  },
+  {
     title: '心力锻炼',
     answer: [
       '冥想。对困难对未来的思考。',
@@ -480,7 +496,6 @@ const methodQuestions = [
       '竞争思维，如何超越周围的人'
     ]
   },
- 
   {
     title: '更好的方法',
     answer: [
@@ -610,6 +625,10 @@ export default class AppContainer extends React.Component {
   }
 
   showAnswer = qa => {
+    if(qa.type == 'link') {
+      return window.open(qa.answer[0], '_blank');
+    }
+
     this.setState({
       answers: [...this.state.answers, qa.answer]
     }, function callback(){

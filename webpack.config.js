@@ -339,12 +339,15 @@ const createConfig = () => {
     // Entry Points
     // ------------------------------------
     webpackConfig.entry = {
-      app: [path.resolve(__dirname, 'src/index.js')].concat(
-        'webpack-hot-middleware/client?path=/__webpack_hmr'
-      ),
-      app2: [path.resolve(__dirname, 'src/index2.js')].concat(
-        'webpack-hot-middleware/client?path=/__webpack_hmr'
-      )
+      app: [path.resolve(__dirname, 'src/index.js')],
+      // app2: [path.resolve(__dirname, 'src/index2.js')]
+    }
+
+    // if dev add hot-middleware
+    if (__DEV__) {
+      for(let key in webpackConfig.entry) {
+        webpackConfig.entry[key] = webpackConfig.entry[key].concat('webpack-hot-middleware/client?path=/__webpack_hmr')
+      }
     }
   
     // ------------------------------------
@@ -360,7 +363,7 @@ const createConfig = () => {
     // Bundle Output
     // ------------------------------------
     webpackConfig.output = {
-      filename: __DEV__ ? '[name].[hash].js': '[name].[chunkhash].js',
+      filename: __DEV__ ? '[name].[hash].js' : '[name].[chunkhash].js',
       chunkFilename: '[name].[chunkhash].chunk.js',
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/'
