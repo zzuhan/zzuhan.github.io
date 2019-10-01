@@ -1,8 +1,207 @@
-import React from 'react';
-import styles from './QA.scss';
-import QA from '@/components/QA';
-import { Router } from 'react-router';
-import moment from 'moment';
+import React from 'react'
+import styles from './QA.scss'
+import QA from '@/components/QA'
+import { Router } from 'react-router'
+import moment from 'moment'
+import { Tooltip } from 'antd'
+
+function formatWoop(woop) {
+  return (
+    <div>
+      <div>wish {woop.wish}</div>
+      <div>outcome {woop.outcome}</div>
+      <div>obstacle {woop.obstacle}</div>
+      <div>plan {woop.plan}</div>
+    </div>
+  )
+}
+
+const IfQuestions = [
+  {
+    title: '最佳状态',
+    answer: ['']
+  },
+  {
+    title: '自律不足',
+    answer: [
+      '脱离到自制场 freedom方法（最有效的） 小运动，下楼厕所 1w',
+      '睡眠，运动 1k',
+      '切换工作环境 1k',
+      '精力的那个方法，全情训练 1b',
+      '飞轮效应 1b'
+    ]
+  },
+  {
+    title: '懒惰时，懒于思考，懒于之面困难',
+    what: '如在new relic分析时，懒惰多思考几下，总是直接自动的执行下去',
+    answer: ['自我激励']
+  },
+  {
+    title: '觉得枯燥想逃避(尤其思考时)',
+    answer: [
+      [
+        '该休息了，可以下楼走走放松，爬爬楼梯等 1s',
+        '在9.29 思考new relic，去了下厕所上来又有力量了'
+      ],
+      [' 离开电脑，使用纸和笔进行思考'],
+      '发散思维，发散思维有时帮助想的更清楚，突破这个卡点',
+      '切换内容，切换一些脑力不是那么多的事情',
+      '利用好精力，在每天早上精力最好时进行思考',
+      ['自我激励', '9.29激励要如何超越别人']
+    ]
+  },
+  {
+    title: '懒惰，不想做时，动力不足，想玩耍',
+    answer: [
+      'Freedom 脱离负环境，然后进入正环境 1w',
+      '缺乏目标管理',
+      'Woop，为什么，你想要的是什么？ 1k',
+      '超积极思考',
+      '紧迫感',
+      '飞轮效应，反馈快乐的让自己停不下来'
+    ]
+  },
+  {
+    title: '恐惧，逃避，不想去解决时',
+    status: 'error',
+    answer: [
+      '信心，心理暗示，一定可以做到，过去做的Webpack和React的深度，codelabs，都是先一番痛苦的'
+    ]
+  },
+  {
+    title: '紧迫感',
+    answer: [
+      '下周1 v 1，怎么回答对thanos系统的思考',
+      'IF fire，IF No money',
+      'Grow模型，当前的C，如果做到A做到S',
+      '对比，在当前排位中在哪里？',
+      '对过去思考，完全是因为运气和机会，我的实力多强呢？现在还是C级，对比成凯，建华，或lili，还不够奋斗',
+      '看看周围的同事，谁在今日头条当产品，谁在拼多多当了B端的Boss了'
+    ]
+  },
+  {
+    title: '价值观等思考',
+    answer: [
+      '在工作中是怎样的人，让工作结果都要让人担忧的？',
+      '在家庭中是什么样的人？不能抵抗风险，不能给家庭带来什么？未来可能失业被人担忧？'
+    ]
+  },
+  {
+    title: '不快乐 寻找快乐',
+    answer: ['进步 突破 解决困难的问题']
+  }
+]
+
+const checkQuestions = [
+  {
+    title: '快速成长的事情',
+    answer: [
+      [
+        '难以实现的目标，高标准，让自己头疼 -> 不是稍微点脚就能达到的。',
+        '（thanos作为领导者，而非完成功能。产品经理不是学一点，而是学多深，能做出并主导gitlab，听云等产品）（技术上如leetcode招聘，按面试时那么多高要求，技术能做出cms，做出可视化搭建，编辑器等）'
+      ],
+      [
+        '当下的阻碍(一道墙)，突破后海阔天空，可转起飞轮的',
+        '在流利说thanos项目不得其解时，被动触发与老板的1 on 1，在thanos不得其解时，指导要做听云的网络监控）'
+      ],
+      [
+        '向内看，那些自己不愿面对的弱点，风险',
+        '可能淘汰的风险，还是未达到非常的自信和笃定的状态'
+      ],
+      [
+        '提出极高要求，才能不断暴露问题',
+        '如最近一周没什么结果，这样是C级的，要好好复盘一下'
+      ]
+      // ['方法刻意练习 不是随便学学?'],
+      // ['跑步的哲学，学对自己有挑战，不熟悉的部分']
+    ]
+  },
+  {
+    title: '对自己经常的提问 woop',
+    status: 'error',
+    answer: [
+      '需要前面自律中好状态保证，运动，休息，冥想',
+      'wish 如果今天邀请我当腾讯文档的Leader，我能当吗？outcome plan',
+      {
+        type: 'woop',
+        wish: '想做一个S级的人',
+        now: '还是一个C级的，遇到问题逃避，解决非常慢',
+        outcome: '获得正反馈，快乐，再不担心失业，美好生活',
+        obstacle: '当下延续，懒惰，困难逃避',
+        plan: 'okr目标管理'
+      }
+    ]
+  },
+  {
+    title: '飞轮效应',
+    answer: []
+  },
+  {
+    title: '思考',
+    answer: [
+      '思考的目标是什么？',
+      '思考关键的部分，如看new relic，很多部分都不是关键，不是所有都要梳理思考',
+      ''
+    ]
+  },
+  {
+    title: '进行的几个管理',
+    answer: [
+      '状态管理，是否在最佳状态。睡眠，运动，冥想，小活动。',
+      '目标管理，是否充满动力，激动人心目标。(如健身那么渴望，有健康体魄，有较好的身材)',
+      '计划管理，时间和计划是什么，why，how，what',
+      '任务管理，如在后续调研newrelic的apm，mobile，有明确的计划和时间点时，动力没有如此强过'
+    ]
+  },
+  {
+    title: '每天做什么',
+    answer: [
+      '健身',
+      '勤思考，思考的目标',
+      '冥想',
+      '间歇的休息，提神，保持良好投入，思考状态',
+      '勤推演。如对thanos的项目。',
+      '刻意训练，针对技能的',
+      '拓展'
+    ]
+  },
+  {
+    title: '做事前检查',
+    answer: [
+      'why 为什么做这件事，最终达到目标是什么？电梯测试',
+      'how 方案是什么。如何一步步达到最终目标。roadmap',
+      'what 具体做什么，沉淀下来的内容',
+      'plan 详细的计划，下一步任务，就如有明确的开发功能时效率最高。(newRelic，听云，调研过程一点状态都没有)',
+      '预演 就像free solo的作者，不是盲目攀登，经过多少次演练',
+      '精通，而不是侥幸完成'
+    ]
+  },
+  {
+    title: '做事计划',
+    answer: ['123', '123', '123']
+  },
+  {
+    title: '当下做什么，什么态度',
+    answer: [
+      '趁当下这么有时间，可以做转型准备，如B端产品经理',
+      '或者技术上竞争力学习，如网易有数可视化搭建等复杂应用，'
+    ]
+  }
+]
+
+const doWhatQuestions = []
+
+const todoQuestions = [
+  {
+    title: '目标感的问题',
+    answer: [
+      '一沉浸到工作开始，头脑就缺乏目标感，或放松或，缺乏对长期的感知，缺乏压力，自我放松觉得做得不错，使用Grow，或Woop提醒自己。',
+      '在骑行等发散模式下，就会思考长远的如要成为P7，就必须23倍努力',
+      '长期的目标感要，渴望，明确(而不是现在看不到未来)',
+      '解法，把长期的分解为每天明确有压力的内容，不然总放松'
+    ]
+  }
+]
 
 const BaseQuestions = [
   {
@@ -26,16 +225,12 @@ const BaseQuestions = [
       '积极思考的习惯，成长思维。',
       '重塑大脑，假想成我是阎王或上坡，我会如何行动',
       '触发点。94年化学专业的，在Teambition架构组，现在在Leetcode，https://zhuanlan.zhihu.com/p/24607229。阿大，云构建的设计 http://taobaofed.org/blog/2016/01/29/fe-engineering-width-cloud-build/',
-      '自尊心。6年的还是p6，面试的失败，工作的失败',
+      '自尊心。6年的还是p6，面试的失败，工作的失败'
     ]
   },
   {
     title: '消极思考的时候(不自信)',
-    answer: [
-      '',
-      '',
-      ''
-    ]
+    answer: ['', '', '']
   },
   {
     title: '舒适区的自以为是',
@@ -62,24 +257,25 @@ const BaseQuestions = [
       '逼开始几分钟',
       '@自我苛责'
     ]
-  }, {
+  },
+  {
     title: '直面痛苦的勇气',
     answer: [
       '接纳当下的处境',
       '接纳自己的缺点和不足，接纳倍讨厌的勇气',
       '人生苦难重重，每天从解决问题获得快乐'
     ]
-}, 
-{
-  title: '苛刻的要求',
-  answer: [
-    '职业规划，远大目标是什么？如何达成？',
-    '短期，想去最优秀的公司leetcode，如何进去',
-    '对比那些非常优秀的人，如何战胜他们。94年的leetcode',
-    ''
-  ]
-},
-{
+  },
+  {
+    title: '苛刻的要求',
+    answer: [
+      '职业规划，远大目标是什么？如何达成？',
+      '短期，想去最优秀的公司leetcode，如何进去',
+      '对比那些非常优秀的人，如何战胜他们。94年的leetcode',
+      ''
+    ]
+  },
+  {
     title: '自我苛责',
     answer: [
       '按专家的要求工作了吗？再这样一年也到不了阎王的程度。',
@@ -89,48 +285,44 @@ const BaseQuestions = [
       '家庭担当了吗',
       '6年了还是P6，这么低的薪资，对比阎王等P7'
     ]
-},
-{
-  title: '领导力要求',
-  status: 'error',
-  answer: [
-    '起来像创业者那样充满激情一天',
-    '有清晰的目标，对目标充满信念',
-    '严格要求自己，高要求，高改变。(自律，延迟满足）',
-    '谨慎承诺，承诺要按计划交付'
-  ]
-},
-{
-  title: '遇到无动力怎么办',
-  answer: [
-    '长远且坚定的目标(2年成为前端技术经理)',
-    '寻找快乐，积极幸福心理学，做有意义的事情，接纳自己看到成长',
-    '积极的思考，十倍思维非常重要(我可以是技术经理，如何拿到一堆Offer，3.75成绩)',
-    '对自己苛刻的要求()',
-    '或许该放松下一下了',
-    '回顾过去克服困难，都是小坎，跨一下，差距是方法和努力，充满自信',
-    '@自我激励的方法',
-    '找到当下困难解法，走出泥潭，取得胜利',
-    '为什么对自己残酷，因为世界太残酷了'
-  ]
-}
-];
+  },
+  {
+    title: '领导力要求',
+    status: 'error',
+    answer: [
+      '起来像创业者那样充满激情一天',
+      '有清晰的目标，对目标充满信念',
+      '严格要求自己，高要求，高改变。(自律，延迟满足）',
+      '谨慎承诺，承诺要按计划交付'
+    ]
+  },
+  {
+    title: '遇到无动力怎么办',
+    answer: [
+      '长远且坚定的目标(2年成为前端技术经理)',
+      '寻找快乐，积极幸福心理学，做有意义的事情，接纳自己看到成长',
+      '积极的思考，十倍思维非常重要(我可以是技术经理，如何拿到一堆Offer，3.75成绩)',
+      '对自己苛刻的要求()',
+      '或许该放松下一下了',
+      '回顾过去克服困难，都是小坎，跨一下，差距是方法和努力，充满自信',
+      '@自我激励的方法',
+      '找到当下困难解法，走出泥潭，取得胜利',
+      '为什么对自己残酷，因为世界太残酷了'
+    ]
+  }
+]
 
 const threeGansQuestions = [
   {
     title: '自己没有动力了',
     status: 'error',
-    answer: [
-      "https://www.yuque.com/chengkuan/great_person/energy#9Fe7L",
-    ],
+    answer: ['https://www.yuque.com/chengkuan/great_person/energy#9Fe7L'],
     type: 'link'
   },
   {
     title: '逃避困难时',
     status: 'error',
-    answer: [
-      "https://www.yuque.com/chengkuan/great_person/escape#TPz9a",
-    ],
+    answer: ['https://www.yuque.com/chengkuan/great_person/escape#TPz9a'],
     type: 'link'
   },
   {
@@ -164,7 +356,7 @@ const threeGansQuestions = [
       '4 专注模式和发散模式切换',
       '独自安静的环境。(一堆人在家时无法很好思考)',
       '开放的工作空间。(狭小的工作空间，无法思考)',
-      '状态。太高压会导致视野变摘。',
+      '状态。太高压会导致视野变摘。'
     ]
   },
   {
@@ -181,15 +373,13 @@ const threeGansQuestions = [
     status: '',
     answer: [
       '一件事总是U型曲线，从初始高昂，挫折的低谷，再走出低谷。(项目是，面试过程也是)',
-      '成长就是提出一个目标，失败，吸取教训(决定不同人的差异)，再提出更高目标，螺旋上升的',
+      '成长就是提出一个目标，失败，吸取教训(决定不同人的差异)，再提出更高目标，螺旋上升的'
     ]
   },
   {
     title: '不自信时',
     status: '',
-    answer: [
-      '@自我的曲线'
-    ]
+    answer: ['@自我的曲线']
   },
   {
     title: '自我的曲线',
@@ -202,10 +392,7 @@ const threeGansQuestions = [
   },
   {
     title: '精力',
-    answer: [
-      '最高精力来自于注入的意义。拥有伟大的梦想。',
-      '积极自信的情绪',
-    ]
+    answer: ['最高精力来自于注入的意义。拥有伟大的梦想。', '积极自信的情绪']
   },
   {
     title: '焦虑自卑',
@@ -227,11 +414,11 @@ const threeGansQuestions = [
     title: '逃避，不愿做',
     status: 'error',
     answer: [
-     '不愿改变习惯，不想做某事，逃避困难，不敢直面自身的缺点',
-     '因为要到非舒适的，想到困难和艰辛就把自己吓怕了',
-     '重要迈出第一步，逼自己开始10分钟',
-     '心理X光，你害怕的是什么',
-     '如，不敢写文章(害怕写的不好)，不敢'
+      '不愿改变习惯，不想做某事，逃避困难，不敢直面自身的缺点',
+      '因为要到非舒适的，想到困难和艰辛就把自己吓怕了',
+      '重要迈出第一步，逼自己开始10分钟',
+      '心理X光，你害怕的是什么',
+      '如，不敢写文章(害怕写的不好)，不敢'
     ]
   },
   {
@@ -243,14 +430,12 @@ const threeGansQuestions = [
       '站在别人别人的考虑，同理心。她也不是故意的，有原因的'
     ]
   }
-];
+]
 
 const growQuestions = [
   {
     title: '高效能',
-    answer: [
-      '保持高效能，才有时间做其它事情'
-    ]
+    answer: ['保持高效能，才有时间做其它事情']
   },
   {
     title: '明方向，远正高',
@@ -336,9 +521,7 @@ const growQuestions = [
   {
     title: '复盘',
     status: 'error',
-    answer: [
-      '复盘才能发现问题，及时纠正，赢得更多时间和更好解决问题',
-    ]
+    answer: ['复盘才能发现问题，及时纠正，赢得更多时间和更好解决问题']
   },
   {
     title: '职业价值认知',
@@ -352,9 +535,8 @@ const growQuestions = [
   {
     title: '优秀人的认知',
     status: 'error',
-    answer: [
-    ]
-  },
+    answer: []
+  }
   // {
   //   title: '就是解决问题',
   //   status: 'error',
@@ -409,7 +591,7 @@ const growQuestions = [
   //     '远见。(对前端未来思考，技术未来，产业未来)'
   //   ]
   // },
- 
+
   // {
   //   title: 'Stay Foolish(质疑否定)',
   //   answer: [
@@ -447,7 +629,7 @@ const growQuestions = [
   //     '挑战是什么？'
   //   ]
   // }
-];
+]
 
 const methodQuestions = [
   {
@@ -470,9 +652,7 @@ const methodQuestions = [
   },
   {
     title: '注意力',
-    answer: [
-      '在自己的身上'
-    ]
+    answer: ['在自己的身上']
   },
   {
     title: '最重要的事',
@@ -498,12 +678,8 @@ const methodQuestions = [
   },
   {
     title: '更好的方法',
-    answer: [
-      '认知',
-      '格局',
-      '远见'
-    ]
-  },
+    answer: ['认知', '格局', '远见']
+  }
 ]
 
 const solveQuestions = [
@@ -548,15 +724,11 @@ const solveQuestions = [
   },
   {
     title: '是否尽力',
-    answer: [
-      '面试，可以像老板，像阎王，像他人请教帮助'
-    ]
+    answer: ['面试，可以像老板，像阎王，像他人请教帮助']
   },
   {
     title: '解决不了的问题',
-    answer: [
-      '知道自己边界，求助他人是好解法，不要傻干楞干'
-    ]
+    answer: ['知道自己边界，求助他人是好解法，不要傻干楞干']
   },
   {
     title: '当局者迷',
@@ -604,20 +776,20 @@ const techQuestions = [
   },
   {
     title: '技术的日常',
-    answer: [
-      '要像能谈论NBA球员那样探讨技术'
-    ]
+    answer: ['要像能谈论NBA球员那样探讨技术']
   },
   {
     title: '技术的几个点',
-    answer: [
-      '先进性，最先进的是如何的',
-      '思想，有哪些更优异的思想'
-    ]
+    answer: ['先进性，最先进的是如何的', '思想，有哪些更优异的思想']
   }
-];
+]
 
-let questions = [].concat(BaseQuestions).concat(solveQuestions).concat(threeGansQuestions).concat(growQuestions).concat(methodQuestions);
+let questions = []
+  .concat(BaseQuestions)
+  .concat(solveQuestions)
+  .concat(threeGansQuestions)
+  .concat(growQuestions)
+  .concat(methodQuestions)
 
 export default class AppContainer extends React.Component {
   state = {
@@ -625,53 +797,73 @@ export default class AppContainer extends React.Component {
   }
 
   showAnswer = qa => {
-    if(qa.type == 'link') {
-      return window.open(qa.answer[0], '_blank');
+    if (qa.type == 'link') {
+      return window.open(qa.answer[0], '_blank')
     }
 
-    this.setState({
-      answers: [...this.state.answers, qa.answer]
-    }, function callback(){
-      console.log(this.state.answers)
-    });
+    this.setState(
+      {
+        answers: [...this.state.answers, qa.answer]
+      },
+      function callback() {
+        console.log(this.state.answers)
+      }
+    )
 
-    import('@/components/lazyload').then( str => {
-      console.log(str);
-    });
+    import('@/components/lazyload').then(str => {
+      console.log(str)
+    })
   }
 
   showAnswerByTitle = title => {
     let qa = questions.find(question => question.title.indexOf(title) !== -1)
-    if(qa) {
-      this.setState({
-        answers: [...this.state.answers, qa.answer]
-      }, function callback(){
-        console.log(this.state.answers)
-      });
+    if (qa) {
+      this.setState(
+        {
+          answers: [...this.state.answers, qa.answer]
+        },
+        function callback() {
+          console.log(this.state.answers)
+        }
+      )
     } else {
-      this.setState({
-        answers: [...this.state.answers, [`未找到"${title}"对应的答案`]]
-      }, function callback(){
-        console.log(this.state.answers)
-      });
+      this.setState(
+        {
+          answers: [...this.state.answers, [`未找到"${title}"对应的答案`]]
+        },
+        function callback() {
+          console.log(this.state.answers)
+        }
+      )
     }
   }
 
-  onAnwserClick = (title) => {
-   
-    if(title.indexOf('@') !== -1) {
-      this.showAnswerByTitle(title.slice(1));
+  onAnwserClick = title => {
+    if (title.indexOf('@') !== -1) {
+      this.showAnswerByTitle(title.slice(1))
     }
   }
 
   render() {
-    const { answers } = this.state;
+    const { answers } = this.state
 
-    window.require && require("@weex/dom");
+    window.require && require('@weex/dom')
 
     return (
-        <div>
-            <span className={styles.sectionTitle}>基础要求</span>
+      <div>
+        <span className={styles.sectionTitle}>如果就</span>
+        <div className={styles.qaList}>
+          {IfQuestions.map(qa => {
+            return <QA onClick={this.showAnswer} qa={qa} />
+          })}
+        </div>
+        <span className={styles.sectionTitle}>检查清单</span>
+        <div className={styles.qaList}>
+          {checkQuestions.map(qa => {
+            return <QA onClick={this.showAnswer} qa={qa} />
+          })}
+        </div>
+        {/* <span className={styles.sectionTitle}>基础要求</span>
             <div className={styles.qaList}>
               {BaseQuestions.map(qa => {
                 return <QA onClick={this.showAnswer} qa={qa} />;
@@ -706,13 +898,36 @@ export default class AppContainer extends React.Component {
               {techQuestions.map(qa => {
                 return <QA onClick={this.showAnswer} qa={qa} />;
               })}
-            </div>
-            {answers.map(answer => {
-              return <ul className={styles.answerList}>
-                { answer.map(a => <li className={styles.answerItem} onClick={()=>{this.onAnwserClick(a)} }>{a}</li>)}
-              </ul>;
-            })}
-        </div>
-    );
+            </div>*/}
+        {answers.map(answer => {
+          return (
+            <ul className={styles.answerList}>
+              {answer.map(answer => (
+                <li
+                  className={styles.answerItem}
+                  onClick={() => {
+                    this.onAnwserClick(answer)
+                  }}
+                >
+                  {(() => {
+                    if (Array.isArray(answer)) {
+                      return <Tooltip title={answer[1]}>{answer[0]}</Tooltip>
+                    }
+                    if (typeof answer === 'object' && answer.type === 'woop') {
+                      return (
+                        <Tooltip title={formatWoop(answer)}>
+                          {answer.wish}
+                        </Tooltip>
+                      )
+                    }
+                    return answer
+                  })()}
+                </li>
+              ))}
+            </ul>
+          )
+        })}
+      </div>
+    )
   }
 }
